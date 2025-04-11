@@ -33,7 +33,13 @@
 
         <!-- Ảnh -->
         <td class="p-2 border">
-          <img :src="room.image" alt="" class="w-20 h-auto rounded shadow" />
+          <img
+              :src="room.image.replace('/upload/', '/upload/w_120,h_80,c_fill/')"
+              class="rounded shadow"
+              loading="lazy"
+              width="120"
+              height="80"
+          />
         </td>
 
         <!-- Tên phòng -->

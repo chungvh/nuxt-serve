@@ -28,5 +28,17 @@
     "name": "2222",
     "price": 2222,
     "image": "/uploads/603b6953-96e3-4cce-8467-547758230b56.png"
+  },
+  {
+    "id": 1744360616378,
+    "name": "2323",
+    "price": 232323,
+    "image": "https://res.cloudinary.com/dercnw5bg/image/upload/v1744360937/hotel-rooms/jt8tdo6q96t8xcdlmgwd.png"
+  },
+  {
+    "id": 1744360912885,
+    "name": "323",
+    "price": 23232,
+    "image": "https://res.cloudinary.com/dercnw5bg/image/upload/v1744360912/hotel-rooms/huzwosfkcb5ftmxbczv7.png"
   }
 ]

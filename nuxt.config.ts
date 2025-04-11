@@ -3,10 +3,13 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   nitro: {
-    preset: 'vercel'
+    preset: 'vercel' // 👉 đảm bảo Nitro hoạt động đúng kiểu Serverless
   },
   runtimeConfig: {
-    // Public config nếu cần
-    public: {}
+    cloudinary: {
+      cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+      apiKey: process.env.CLOUDINARY_API_KEY,
+      apiSecret: process.env.CLOUDINARY_API_SECRET
+    }
   }
 })
