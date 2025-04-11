@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Phòng Deluxe",
+    "price": 120,
+    "image": "/uploads/99675999-7370-43af-975a-9fbcf33cb526.png"
+  },
+  {
+    "id": 3,
+    "name": "Suite",
+    "price": 23210,
+    "image": "/uploads/88e00a50-5d9f-413b-97d6-0503745cbd91.png"
+  },
+  {
+    "id": 1744356754348,
+    "name": "Normal",
+    "price": 23,
+    "image": "/uploads/a11e2e19-8ccd-4ca0-824d-71172ac5b5ab.png"
+  },
+  {
+    "id": 1744357162679,
+    "name": "chung1",
+    "price": 1,
+    "image": "/uploads/4800e164-4a5c-4cac-adbb-d9e1e4c35dde.png"
+  },
+  {
+    "id": 1744357316547,
+    "name": "2222",
+    "price": 2222,
+    "image": "/uploads/603b6953-96e3-4cce-8467-547758230b56.png"
+  }
+]
