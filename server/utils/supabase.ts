@@ -1,5 +1,4 @@
 import { createClient } from '@supabase/supabase-js'
-
 let supabase = null
 
 export function getSupabase() {

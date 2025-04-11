@@ -32,14 +32,15 @@
         <td class="p-2 border">{{ room.id }}</td>
 
         <!-- Ảnh -->
-        <td class="p-2 border">
+        <td class="p-2 border text-center">
           <img
-              :src="room.image.replace('/upload/', '/upload/w_120,h_80,c_fill/')"
-              class="rounded shadow"
+              v-if="room.image"
+              :src="room.image"
+              alt="Ảnh phòng"
+              class="w-[120px] h-auto rounded shadow"
               loading="lazy"
-              width="120"
-              height="80"
           />
+          <span v-else class="text-gray-400 italic">Không có ảnh</span>
         </td>
 
         <!-- Tên phòng -->
