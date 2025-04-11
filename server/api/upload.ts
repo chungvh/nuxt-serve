@@ -9,6 +9,7 @@ cloudinary.config({
     api_secret: config.cloudinary.apiSecret
 })
 
+// Chuyển buffer thành ReadableStream
 function bufferToStream(buffer: Buffer) {
     const readable = new Readable()
     readable.push(buffer)
@@ -21,22 +22,25 @@ export default defineEventHandler(async (event) => {
     const file = formData?.find(f => f.name === 'file')
 
     if (!file || !file.data) {
-        throw createError({ statusCode: 400, statusMessage: 'Không có file' })
+        throw createError({
+            statusCode: 400,
+            statusMessage: 'No file uploaded'
+        })
     }
 
-    const uploadStream = cloudinary.uploader.upload_stream()
-
-    return new Promise((resolve, reject) => {
-        cloudinary.uploader.upload_stream(
-            { folder: 'hotel-rooms' }, // Tạo thư mục "hotel-rooms" trong Cloudinary
+    // Upload stream to Cloudinary
+    return await new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+            { folder: 'hotel-rooms' },
             (error, result) => {
                 if (error) {
-                    console.error('Cloudinary upload error:', error)
-                    reject(createError({ statusCode: 500, statusMessage: 'Upload thất bại' }))
+                    console.error('Cloudinary error:', error)
+                    reject(createError({ statusCode: 500, statusMessage: 'Upload failed' }))
                 } else {
                     resolve({ url: result.secure_url })
                 }
             }
-        ).end(file.data)
+        )
+        bufferToStream(file.data as Buffer).pipe(stream)
     })
 })
