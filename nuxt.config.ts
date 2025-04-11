@@ -6,6 +6,8 @@ export default defineNuxtConfig({
     preset: 'vercel' // 👉 đảm bảo Nitro hoạt động đúng kiểu Serverless
   },
   runtimeConfig: {
+    supabaseUrl: process.env.SUPABASE_URL,
+    supabaseKey: process.env.SUPABASE_KEY,
     cloudinary: {
       cloudName: process.env.CLOUDINARY_CLOUD_NAME,
       apiKey: process.env.CLOUDINARY_API_KEY,

@@ -1,43 +1,41 @@
-import { getRooms, saveRooms } from '../../utils/roomStore'
-import { v2 as cloudinary } from 'cloudinary'
-
-const config = useRuntimeConfig()
-
-cloudinary.config({
-    cloud_name: config.cloudinary.cloudName,
-    api_key: config.cloudinary.apiKey,
-    api_secret: config.cloudinary.apiSecret
-})
+import { getSupabase } from '../../utils/supabase'
 
 export default defineEventHandler(async (event) => {
     const id = Number(getRouterParam(event, 'id'))
-    let rooms = await getRooms()
-    const index = rooms.findIndex(r => r.id === id)
-
-    if (index === -1) {
-        throw createError({ statusCode: 404, statusMessage: 'Không tìm thấy phòng' })
-    }
 
     if (event.method === 'PUT') {
         const body = await readBody(event)
-        const oldImage = rooms[index].image
-        const newImage = body.image
 
-        // 🔥 Đây là đoạn bạn hỏi:
-        if (oldImage !== newImage && oldImage?.includes('res.cloudinary.com')) {
-            const match = oldImage.match(/\/hotel-rooms\/([^/.]+)/)
-            const publicId = match?.[1]
-            if (publicId) {
-                await cloudinary.uploader.destroy(`hotel-rooms/${publicId}`)
-                console.log(`Đã xóa ảnh Cloudinary: hotel-rooms/${publicId}`)
-            }
+        const { data, error } = await getSupabase()
+            .from('rooms')
+            .update(body)
+            .eq('id', id)
+            .select()
+
+        if (error) {
+            console.error('Supabase UPDATE error:', error)
+            throw createError({ statusCode: 500, statusMessage: error.message })
         }
 
-        // ✅ Cập nhật dữ liệu phòng
-        rooms[index] = { ...rooms[index], ...body }
-        await saveRooms(rooms)
-        return { message: `Đã cập nhật phòng ${id}`, data: rooms[index] }
+        return {
+            message: `Đã cập nhật phòng ID ${id}`,
+            data: data?.[0]
+        }
     }
 
-    throw createError({ statusCode: 405 })
+    if (event.method === 'DELETE') {
+        const { error } = await getSupabase()
+            .from('rooms')
+            .delete()
+            .eq('id', id)
+
+        if (error) {
+            console.error('Supabase DELETE error:', error)
+            throw createError({ statusCode: 500, statusMessage: error.message })
+        }
+
+        return { message: `Đã xóa phòng ID ${id}` }
+    }
+
+    throw createError({ statusCode: 405, statusMessage: 'Method Not Allowed' })
 })

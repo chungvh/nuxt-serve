@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.49.4",
     "cloudinary": "^2.6.0",
     "fs-extra": "^11.3.0",
     "nuxt": "^3.16.2",
